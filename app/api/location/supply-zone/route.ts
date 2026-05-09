@@ -111,6 +111,13 @@ export async function GET(request: Request) {
 
   const features = (substationsData as { features: SubstationFeature[] })
     .features;
+  // Match strategy:
+  //   1. Substation name *contains* the prefix character (e.g. "당" matches
+  //      당진/신당진/북당진 — KEPCO often anonymizes by base district name).
+  //   2. OR substation name contains the sigungu base (e.g. 시군구 "당진시"
+  //      → "당진" — catches "신당진" / "북당진" even when prefix differs).
+  //   3. Distance ≤ 50km.
+  const sigunguBase = match.시군구.replace(/시$|군$|구$/, "");
   const candidates: Array<{
     name: string;
     voltageKv: number;
@@ -118,7 +125,9 @@ export async function GET(request: Request) {
   }> = [];
   for (const f of features) {
     const name = f.properties.name;
-    if (!prefix || !name.startsWith(prefix)) continue;
+    const prefixHit = !!prefix && name.includes(prefix);
+    const sigunguHit = !!sigunguBase && name.includes(sigunguBase);
+    if (!prefixHit && !sigunguHit) continue;
     const fx = f.geometry.coordinates[0]!;
     const fy = f.geometry.coordinates[1]!;
     const d = haversineKm(lat, lng, fy, fx);
@@ -129,7 +138,12 @@ export async function GET(request: Request) {
       distanceKm: +d.toFixed(1),
     });
   }
-  candidates.sort((a, b) => a.distanceKm - b.distanceKm);
+  // Dedup (a name may match both prefix and sigungu)
+  const seen = new Set<string>();
+  const dedup = candidates.filter((c) =>
+    seen.has(c.name) ? false : (seen.add(c.name), true),
+  );
+  dedup.sort((a, b) => a.distanceKm - b.distanceKm);
 
   const sameZone = rows
     .filter((r) => r.공급변전소 === code)
@@ -145,7 +159,7 @@ export async function GET(request: Request) {
         sigungu: match.시군구,
         eupmyeondong: match.읍면동,
       },
-      candidateSubstations: candidates.slice(0, 5),
+      candidateSubstations: dedup.slice(0, 5),
       sameZoneSampleRegions: sameZone,
     },
     { headers: { "Cache-Control": "public, s-maxage=86400" } },
