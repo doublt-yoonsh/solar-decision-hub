@@ -215,12 +215,14 @@ export default function TestLocationPage() {
 
               <TabsContent
                 value="substation"
-                className="space-y-1 text-sm pt-2"
+                className="space-y-2 text-sm pt-2"
               >
                 {result.nearestSubstation ? (
-                  <>
+                  <div className="space-y-1">
+                    <p className="text-xs uppercase text-muted-foreground">
+                      OSM 거리 nearest (참고)
+                    </p>
                     <p className="flex gap-2 items-center">
-                      최근접:{" "}
                       <strong>{result.nearestSubstation.name}</strong>{" "}
                       <span className="text-muted-foreground">
                         ({result.nearestSubstation.voltageKv}kV ·{" "}
@@ -230,14 +232,58 @@ export default function TestLocationPage() {
                         source={result.nearestSubstation.sourceMeta.source}
                       />
                     </p>
-                    <p className="text-muted-foreground">
+                    <p className="text-muted-foreground text-xs">
                       거리: {result.nearestSubstation.distanceKm} km
                       {result.nearestSubstation.fallbackUsed &&
                         " ⚠️ (50km 초과 — 권역 평균 사용)"}
                     </p>
-                  </>
+                  </div>
                 ) : (
                   <p className="text-muted-foreground">데이터 없음</p>
+                )}
+                {result.supplyZone && (
+                  <div className="space-y-1 border-t pt-2">
+                    <p className="text-xs uppercase text-muted-foreground">
+                      한전 공급권역 (행정구역 기반)
+                    </p>
+                    <p className="flex gap-2 items-center">
+                      코드: <strong>{result.supplyZone.code}</strong>
+                      <SourceBadge
+                        source={result.supplyZone.sourceMeta.source}
+                      />
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      매칭 행정구역: {result.supplyZone.matchedRegion.sido}{" "}
+                      {result.supplyZone.matchedRegion.sigungu}{" "}
+                      {result.supplyZone.matchedRegion.eupmyeondong}
+                    </p>
+                    {result.supplyZone.candidateSubstations.length > 0 ? (
+                      <ul className="text-xs space-y-0.5 list-disc list-inside text-muted-foreground">
+                        {result.supplyZone.candidateSubstations.map(
+                          (c, i) => (
+                            <li key={i}>
+                              {c.name} — {c.distanceKm}km · {c.voltageKv}kV
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    ) : (
+                      <p className="text-xs text-muted-foreground">
+                        OSM 변전소 중 prefix 매칭 후보 없음 (50km 이내 미존재)
+                      </p>
+                    )}
+                    {result.supplyZone.sameZoneSampleRegions.length > 0 && (
+                      <p className="text-[10px] text-muted-foreground">
+                        같은 권역:{" "}
+                        {result.supplyZone.sameZoneSampleRegions
+                          .slice(0, 3)
+                          .join(" · ")}
+                      </p>
+                    )}
+                    <p className="text-[10px] text-muted-foreground">
+                      ※ 한전 비식별 코드. 실제 접속 변전소는 분산형전원 신청 결과에 따라 다릅니다.
+                    </p>
+                  </div>
                 )}
               </TabsContent>
 

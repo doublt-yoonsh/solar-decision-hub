@@ -14,6 +14,7 @@ import { lookup as vworldLookup } from "./vworld";
 import { getYearlyGenHours } from "./pvgis";
 import { inferSiteType as heuristicSiteType } from "./siteTypeHeuristic";
 import { findNearest } from "./substation";
+import { lookupSupplyZone } from "./supplyZone";
 
 export async function enrich(
   lat: number,
@@ -78,6 +79,22 @@ export async function enrich(
     result.nearestSubstation = findNearest(lat, lng);
   } catch (e) {
     failures.push({ step: "substation", error: errorMessage(e) });
+  }
+
+  // -- KEPCO supply zone (depends on address.region) --------------------
+  if (result.address) {
+    try {
+      const zone = await lookupSupplyZone(
+        result.address.region.sido,
+        result.address.region.sigungu,
+        result.address.region.eupmyeondong,
+        lat,
+        lng,
+      );
+      if (zone) result.supplyZone = zone;
+    } catch (e) {
+      failures.push({ step: "supply-zone", error: errorMessage(e) });
+    }
   }
 
   return result;

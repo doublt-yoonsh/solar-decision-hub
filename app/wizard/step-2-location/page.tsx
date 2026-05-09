@@ -175,15 +175,37 @@ export default function Step2Page() {
                 <span className="text-muted-foreground">최근접 변전소:</span>
                 <span>
                   {result.nearestSubstation.name} (
-                  {result.nearestSubstation.distanceKm}km
-                  {result.nearestSubstation.fallbackUsed &&
-                    " · 권역 평균 사용"}
-                  )
+                  {result.nearestSubstation.distanceKm}km · OSM)
                 </span>
                 <SourceBadge
                   source={result.nearestSubstation.sourceMeta.source}
                 />
               </p>
+            )}
+            {result.supplyZone && (
+              <div className="border-t pt-2 mt-2 space-y-1">
+                <p className="flex flex-wrap gap-2 items-baseline">
+                  <span className="text-muted-foreground">공급권역 (한전):</span>
+                  <span className="font-medium">{result.supplyZone.code}</span>
+                  <SourceBadge
+                    source={result.supplyZone.sourceMeta.source}
+                  />
+                </p>
+                {result.supplyZone.candidateSubstations.length > 0 && (
+                  <p className="text-xs text-muted-foreground">
+                    후보:{" "}
+                    {result.supplyZone.candidateSubstations
+                      .map(
+                        (c) =>
+                          `${c.name} (${c.distanceKm}km, ${c.voltageKv}kV)`,
+                      )
+                      .join(" · ")}
+                  </p>
+                )}
+                <p className="text-[10px] text-muted-foreground">
+                  ※ 한전 비식별 코드. 실제 접속 변전소는 분산형전원 신청 결과에 따라 다릅니다.
+                </p>
+              </div>
             )}
           </CardContent>
         </Card>

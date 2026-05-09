@@ -91,7 +91,12 @@ export interface NearestSubstationResult {
 
 /** A step that failed during enrichment, surfaced to the UI for transparency. */
 export interface EnrichmentFailure {
-  step: 'reverse-geocode' | 'pvgis' | 'site-type' | 'substation';
+  step:
+    | "reverse-geocode"
+    | "pvgis"
+    | "site-type"
+    | "substation"
+    | "supply-zone";
   error: string;
 }
 
@@ -106,6 +111,8 @@ export interface EnrichmentResult {
   irradiance?: PvgisResult;
   siteTypeHint?: SiteTypeHint;
   nearestSubstation?: NearestSubstationResult;
+  /** KEPCO supply zone (region → 공급변전소 code → narrowed candidates). */
+  supplyZone?: import("./supplyZone").SupplyZoneResult;
   partialFailures: EnrichmentFailure[];
   /** ISO timestamp of computation. */
   computedAt: string;
