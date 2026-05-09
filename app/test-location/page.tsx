@@ -217,32 +217,8 @@ export default function TestLocationPage() {
                 value="substation"
                 className="space-y-2 text-sm pt-2"
               >
-                {result.nearestSubstation ? (
+                {result.supplyZone ? (
                   <div className="space-y-1">
-                    <p className="text-xs uppercase text-muted-foreground">
-                      OSM 거리 nearest (참고)
-                    </p>
-                    <p className="flex gap-2 items-center">
-                      <strong>{result.nearestSubstation.name}</strong>{" "}
-                      <span className="text-muted-foreground">
-                        ({result.nearestSubstation.voltageKv}kV ·{" "}
-                        {result.nearestSubstation.grid})
-                      </span>
-                      <SourceBadge
-                        source={result.nearestSubstation.sourceMeta.source}
-                      />
-                    </p>
-                    <p className="text-muted-foreground text-xs">
-                      거리: {result.nearestSubstation.distanceKm} km
-                      {result.nearestSubstation.fallbackUsed &&
-                        " ⚠️ (50km 초과 — 권역 평균 사용)"}
-                    </p>
-                  </div>
-                ) : (
-                  <p className="text-muted-foreground">데이터 없음</p>
-                )}
-                {result.supplyZone && (
-                  <div className="space-y-1 border-t pt-2">
                     <p className="text-xs uppercase text-muted-foreground">
                       한전 공급권역 (행정구역 기반)
                     </p>
@@ -269,7 +245,7 @@ export default function TestLocationPage() {
                       </ul>
                     ) : (
                       <p className="text-xs text-muted-foreground">
-                        OSM 변전소 중 prefix 매칭 후보 없음 (50km 이내 미존재)
+                        OSM 변전소 중 매칭 후보 없음 (50km 이내 미존재)
                       </p>
                     )}
                     {result.supplyZone.sameZoneSampleRegions.length > 0 && (
@@ -284,6 +260,29 @@ export default function TestLocationPage() {
                       ※ 한전 비식별 코드. 실제 접속 변전소는 분산형전원 신청 결과에 따라 다릅니다.
                     </p>
                   </div>
+                ) : result.nearestSubstation ? (
+                  <div className="space-y-1">
+                    <p className="text-xs uppercase text-muted-foreground">
+                      OSM 거리 nearest (한전 권역 미매칭 폴백)
+                    </p>
+                    <p className="flex gap-2 items-center">
+                      <strong>{result.nearestSubstation.name}</strong>{" "}
+                      <span className="text-muted-foreground">
+                        ({result.nearestSubstation.voltageKv}kV ·{" "}
+                        {result.nearestSubstation.grid})
+                      </span>
+                      <SourceBadge
+                        source={result.nearestSubstation.sourceMeta.source}
+                      />
+                    </p>
+                    <p className="text-muted-foreground text-xs">
+                      거리: {result.nearestSubstation.distanceKm} km
+                      {result.nearestSubstation.fallbackUsed &&
+                        " ⚠️ (50km 초과 — 권역 평균 사용)"}
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-muted-foreground">데이터 없음</p>
                 )}
               </TabsContent>
 

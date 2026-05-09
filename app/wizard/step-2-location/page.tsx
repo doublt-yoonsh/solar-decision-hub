@@ -170,30 +170,17 @@ export default function Step2Page() {
                 <SourceBadge source={result.siteTypeHint.sourceMeta.source} />
               </p>
             )}
-            {result.nearestSubstation && (
-              <p className="flex flex-wrap gap-2 items-baseline">
-                <span className="text-muted-foreground">최근접 변전소:</span>
-                <span>
-                  {result.nearestSubstation.name} (
-                  {result.nearestSubstation.distanceKm}km · OSM)
-                </span>
-                <SourceBadge
-                  source={result.nearestSubstation.sourceMeta.source}
-                />
-              </p>
-            )}
-            {result.supplyZone && (
-              <div className="border-t pt-2 mt-2 space-y-1">
+            {result.supplyZone ? (
+              <div className="space-y-1">
                 <p className="flex flex-wrap gap-2 items-baseline">
-                  <span className="text-muted-foreground">공급권역 (한전):</span>
+                  <span className="text-muted-foreground">접속 변전소 후보 (한전):</span>
                   <span className="font-medium">{result.supplyZone.code}</span>
                   <SourceBadge
                     source={result.supplyZone.sourceMeta.source}
                   />
                 </p>
-                {result.supplyZone.candidateSubstations.length > 0 && (
+                {result.supplyZone.candidateSubstations.length > 0 ? (
                   <p className="text-xs text-muted-foreground">
-                    후보:{" "}
                     {result.supplyZone.candidateSubstations
                       .map(
                         (c) =>
@@ -201,12 +188,27 @@ export default function Step2Page() {
                       )
                       .join(" · ")}
                   </p>
+                ) : (
+                  <p className="text-xs text-muted-foreground">
+                    OSM 변전소 중 매칭되는 후보 없음 (50km 이내 미존재)
+                  </p>
                 )}
                 <p className="text-[10px] text-muted-foreground">
                   ※ 한전 비식별 코드. 실제 접속 변전소는 분산형전원 신청 결과에 따라 다릅니다.
                 </p>
               </div>
-            )}
+            ) : result.nearestSubstation ? (
+              <p className="flex flex-wrap gap-2 items-baseline">
+                <span className="text-muted-foreground">최근접 변전소 (OSM 거리, 한전 권역 미매칭 폴백):</span>
+                <span>
+                  {result.nearestSubstation.name} (
+                  {result.nearestSubstation.distanceKm}km)
+                </span>
+                <SourceBadge
+                  source={result.nearestSubstation.sourceMeta.source}
+                />
+              </p>
+            ) : null}
           </CardContent>
         </Card>
       )}
