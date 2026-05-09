@@ -80,11 +80,13 @@ export function findNearest(
     distanceKm,
     fallbackUsed,
     sourceMeta: {
-      source: "fallback",
+      // 50km 이내 매칭은 실제 변전소 nearest 결과이므로 'real'.
+      // 50km 초과 시에만 진짜 폴백(권역 평균)으로 'fallback' 처리.
+      source: fallbackUsed ? "fallback" : "real",
       confidence: fallbackUsed ? "low" : "medium",
       notes: fallbackUsed
-        ? `최근접 변전소 ${distanceKm}km — 50km 초과, 권역 평균으로 폴백`
-        : `시드 12개 기준 최근접 매칭 (${distanceKm}km)`,
+        ? `최근접 ${distanceKm}km — 50km 초과, 권역 평균으로 폴백`
+        : `한전 변전소 시드 12개 중 최근접 매칭 (${distanceKm}km · 600+ 풀데이터는 v1.x)`,
     },
   };
 }
