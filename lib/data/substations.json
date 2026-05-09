@@ -1,0 +1,26 @@
+{
+  "_meta": {
+    "source": "공공데이터포털 - 한전 송변전 GeoJSON (https://www.data.go.kr) — v1 시드 (주요 변전소 12개)",
+    "fetchedAt": "2026-05-09",
+    "license": "공공데이터",
+    "notes": "v1 시드: 주요 154/345/765kV 변전소 12개. 좌표는 공개 위치 정보 기반 대략값. 전체 600+개 변전소는 v1.x에서 공공데이터포털 GeoJSON 다운로드로 보강 예정.",
+    "version": "0.1.0",
+    "confidence": "low",
+    "schemaNote": "GeoJSON FeatureCollection. properties: { name, voltageKv, grid, region }"
+  },
+  "type": "FeatureCollection",
+  "features": [
+    {"type":"Feature","properties":{"name":"양주변전소","voltageKv":345,"grid":"main","region":"경기"},"geometry":{"type":"Point","coordinates":[127.0454,37.7853]}},
+    {"type":"Feature","properties":{"name":"평택변전소","voltageKv":345,"grid":"main","region":"경기"},"geometry":{"type":"Point","coordinates":[127.1129,36.9921]}},
+    {"type":"Feature","properties":{"name":"천안변전소","voltageKv":345,"grid":"main","region":"충남"},"geometry":{"type":"Point","coordinates":[127.1139,36.8151]}},
+    {"type":"Feature","properties":{"name":"청주변전소","voltageKv":345,"grid":"main","region":"충북"},"geometry":{"type":"Point","coordinates":[127.4890,36.6424]}},
+    {"type":"Feature","properties":{"name":"전주변전소","voltageKv":345,"grid":"main","region":"전북"},"geometry":{"type":"Point","coordinates":[127.1480,35.8242]}},
+    {"type":"Feature","properties":{"name":"광주변전소","voltageKv":345,"grid":"main","region":"전남"},"geometry":{"type":"Point","coordinates":[126.8526,35.1595]}},
+    {"type":"Feature","properties":{"name":"대구변전소","voltageKv":345,"grid":"main","region":"경북"},"geometry":{"type":"Point","coordinates":[128.6014,35.8714]}},
+    {"type":"Feature","properties":{"name":"울산변전소","voltageKv":345,"grid":"main","region":"경남"},"geometry":{"type":"Point","coordinates":[129.3114,35.5384]}},
+    {"type":"Feature","properties":{"name":"부산변전소","voltageKv":345,"grid":"main","region":"경남"},"geometry":{"type":"Point","coordinates":[129.0756,35.1796]}},
+    {"type":"Feature","properties":{"name":"강릉변전소","voltageKv":154,"grid":"main","region":"강원"},"geometry":{"type":"Point","coordinates":[128.8761,37.7519]}},
+    {"type":"Feature","properties":{"name":"제주변전소","voltageKv":154,"grid":"jeju","region":"제주"},"geometry":{"type":"Point","coordinates":[126.5312,33.4996]}},
+    {"type":"Feature","properties":{"name":"한림변전소","voltageKv":154,"grid":"jeju","region":"제주"},"geometry":{"type":"Point","coordinates":[126.2645,33.4115]}}
+  ]
+}

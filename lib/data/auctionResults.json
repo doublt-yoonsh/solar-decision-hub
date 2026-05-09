@@ -1,0 +1,29 @@
+{
+  "_meta": {
+    "source": "한국에너지공단 RPS 고정가격경쟁입찰 결과공고 (분기별)",
+    "fetchedAt": "2026-05-09",
+    "license": "공공데이터",
+    "notes": "smpBaseValue=80원/kWh로 일관 추정 (smpBaseSource: 'estimated'). recValue = winningPrice − smpBaseValue. 공고문에 분해값 미공개로 v1.x에서 분해 보강. winningPrice는 가중치 1.0 기준 표준값.",
+    "version": "0.1.0",
+    "confidence": "medium",
+    "capacityBands": ["lt100kw", "lt3mw"]
+  },
+  "results": [
+    {"year":2021,"round":1,"capacityBand":"lt100kw","winningPrice":152.0,"smpBaseValue":80.0,"recValue":72.0,"smpBaseSource":"estimated"},
+    {"year":2021,"round":1,"capacityBand":"lt3mw","winningPrice":148.0,"smpBaseValue":80.0,"recValue":68.0,"smpBaseSource":"estimated"},
+    {"year":2021,"round":2,"capacityBand":"lt100kw","winningPrice":158.0,"smpBaseValue":80.0,"recValue":78.0,"smpBaseSource":"estimated"},
+    {"year":2021,"round":2,"capacityBand":"lt3mw","winningPrice":152.0,"smpBaseValue":80.0,"recValue":72.0,"smpBaseSource":"estimated"},
+    {"year":2022,"round":1,"capacityBand":"lt100kw","winningPrice":152.5,"smpBaseValue":80.0,"recValue":72.5,"smpBaseSource":"estimated"},
+    {"year":2022,"round":1,"capacityBand":"lt3mw","winningPrice":148.0,"smpBaseValue":80.0,"recValue":68.0,"smpBaseSource":"estimated"},
+    {"year":2022,"round":2,"capacityBand":"lt100kw","winningPrice":155.0,"smpBaseValue":80.0,"recValue":75.0,"smpBaseSource":"estimated"},
+    {"year":2022,"round":2,"capacityBand":"lt3mw","winningPrice":150.0,"smpBaseValue":80.0,"recValue":70.0,"smpBaseSource":"estimated"},
+    {"year":2023,"round":1,"capacityBand":"lt100kw","winningPrice":158.0,"smpBaseValue":80.0,"recValue":78.0,"smpBaseSource":"estimated"},
+    {"year":2023,"round":1,"capacityBand":"lt3mw","winningPrice":154.0,"smpBaseValue":80.0,"recValue":74.0,"smpBaseSource":"estimated"},
+    {"year":2023,"round":2,"capacityBand":"lt100kw","winningPrice":163.0,"smpBaseValue":80.0,"recValue":83.0,"smpBaseSource":"estimated"},
+    {"year":2023,"round":2,"capacityBand":"lt3mw","winningPrice":159.0,"smpBaseValue":80.0,"recValue":79.0,"smpBaseSource":"estimated"},
+    {"year":2024,"round":1,"capacityBand":"lt100kw","winningPrice":165.0,"smpBaseValue":80.0,"recValue":85.0,"smpBaseSource":"estimated"},
+    {"year":2024,"round":1,"capacityBand":"lt3mw","winningPrice":160.0,"smpBaseValue":80.0,"recValue":80.0,"smpBaseSource":"estimated"},
+    {"year":2024,"round":2,"capacityBand":"lt100kw","winningPrice":168.0,"smpBaseValue":80.0,"recValue":88.0,"smpBaseSource":"estimated"},
+    {"year":2024,"round":2,"capacityBand":"lt3mw","winningPrice":162.0,"smpBaseValue":80.0,"recValue":82.0,"smpBaseSource":"estimated"}
+  ]
+}

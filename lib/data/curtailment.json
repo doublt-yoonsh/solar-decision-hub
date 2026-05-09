@@ -1,0 +1,53 @@
+{
+  "_meta": {
+    "source": "산업통상자원부 자료 + 언론 보도 종합 (출력제어 통계)",
+    "fetchedAt": "2026-05-09",
+    "license": "mixed (per-source attribution required)",
+    "notes": "v1 시드: 권역별 출력제어 통계 추정. 공식 통합 통계 부재. 제주/호남이 가장 큼. v1.x에서 산업부 통계 + 한전 출력제어 알림 수집으로 보강.",
+    "version": "0.1.0",
+    "confidence": "low",
+    "regions": ["jeju", "honam", "yeongnam", "central", "default"]
+  },
+  "byRegion": {
+    "jeju": {
+      "grid": "jeju",
+      "years": [2021, 2022, 2023, 2024, 2025],
+      "annualEvents": [12, 64, 80, 132, 180],
+      "annualHoursLost": [180, 800, 1100, 1700, 2200],
+      "avgRate": 0.05,
+      "trend": "rising",
+      "notes": "제주 계통은 본토 분리, 재생에너지 비중 높아 출력제어 빈번."
+    },
+    "honam": {
+      "grid": "main",
+      "years": [2021, 2022, 2023, 2024, 2025],
+      "annualEvents": [0, 8, 18, 28, 35],
+      "annualHoursLost": [0, 60, 140, 220, 280],
+      "avgRate": 0.02,
+      "trend": "rising",
+      "notes": "전남·전북 일부 권역 변전소 인근에서 발생."
+    },
+    "yeongnam": {
+      "grid": "main",
+      "years": [2021, 2022, 2023, 2024, 2025],
+      "annualEvents": [0, 0, 4, 8, 12],
+      "annualHoursLost": [0, 0, 20, 50, 80],
+      "avgRate": 0.005,
+      "trend": "rising-slowly"
+    },
+    "central": {
+      "grid": "main",
+      "years": [2021, 2022, 2023, 2024, 2025],
+      "annualEvents": [0, 0, 0, 0, 2],
+      "annualHoursLost": [0, 0, 0, 0, 10],
+      "avgRate": 0.001,
+      "trend": "stable"
+    },
+    "default": {
+      "grid": "main",
+      "avgRate": 0.005,
+      "trend": "rising-slowly",
+      "notes": "권역 매핑 실패 시 적용."
+    }
+  }
+}
