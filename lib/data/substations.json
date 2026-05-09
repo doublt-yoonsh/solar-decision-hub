@@ -1,26 +1,1950 @@
 {
   "_meta": {
-    "source": "공공데이터포털 - 한전 송변전 GeoJSON (https://www.data.go.kr) — v1 시드 (주요 변전소 12개)",
-    "fetchedAt": "2026-05-09",
-    "license": "공공데이터",
-    "notes": "v1 시드: 주요 154/345/765kV 변전소 12개. 좌표는 공개 위치 정보 기반 대략값. 전체 600+개 변전소는 v1.x에서 공공데이터포털 GeoJSON 다운로드로 보강 예정.",
-    "version": "0.1.0",
-    "confidence": "low",
+    "source": "OpenStreetMap (Overpass API) — Korea bbox (33.10-38.70, 124.50-129.50), power=substation, substation=transmission",
+    "fetchedAt": "2026-05-10",
+    "license": "ODbL — © OpenStreetMap contributors",
+    "notes": "한국 송전급 변전소 121개 (일본 0개 제외, 무명 26개 포함). KEPCO 공식 풀 600+ 데이터로 v1.x 추후 보강 가능.",
+    "version": "0.2.1",
+    "confidence": "medium",
     "schemaNote": "GeoJSON FeatureCollection. properties: { name, voltageKv, grid, region }"
   },
   "type": "FeatureCollection",
   "features": [
-    {"type":"Feature","properties":{"name":"양주변전소","voltageKv":345,"grid":"main","region":"경기"},"geometry":{"type":"Point","coordinates":[127.0454,37.7853]}},
-    {"type":"Feature","properties":{"name":"평택변전소","voltageKv":345,"grid":"main","region":"경기"},"geometry":{"type":"Point","coordinates":[127.1129,36.9921]}},
-    {"type":"Feature","properties":{"name":"천안변전소","voltageKv":345,"grid":"main","region":"충남"},"geometry":{"type":"Point","coordinates":[127.1139,36.8151]}},
-    {"type":"Feature","properties":{"name":"청주변전소","voltageKv":345,"grid":"main","region":"충북"},"geometry":{"type":"Point","coordinates":[127.4890,36.6424]}},
-    {"type":"Feature","properties":{"name":"전주변전소","voltageKv":345,"grid":"main","region":"전북"},"geometry":{"type":"Point","coordinates":[127.1480,35.8242]}},
-    {"type":"Feature","properties":{"name":"광주변전소","voltageKv":345,"grid":"main","region":"전남"},"geometry":{"type":"Point","coordinates":[126.8526,35.1595]}},
-    {"type":"Feature","properties":{"name":"대구변전소","voltageKv":345,"grid":"main","region":"경북"},"geometry":{"type":"Point","coordinates":[128.6014,35.8714]}},
-    {"type":"Feature","properties":{"name":"울산변전소","voltageKv":345,"grid":"main","region":"경남"},"geometry":{"type":"Point","coordinates":[129.3114,35.5384]}},
-    {"type":"Feature","properties":{"name":"부산변전소","voltageKv":345,"grid":"main","region":"경남"},"geometry":{"type":"Point","coordinates":[129.0756,35.1796]}},
-    {"type":"Feature","properties":{"name":"강릉변전소","voltageKv":154,"grid":"main","region":"강원"},"geometry":{"type":"Point","coordinates":[128.8761,37.7519]}},
-    {"type":"Feature","properties":{"name":"제주변전소","voltageKv":154,"grid":"jeju","region":"제주"},"geometry":{"type":"Point","coordinates":[126.5312,33.4996]}},
-    {"type":"Feature","properties":{"name":"한림변전소","voltageKv":154,"grid":"jeju","region":"제주"},"geometry":{"type":"Point","coordinates":[126.2645,33.4115]}}
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "Dangjin Thermal Power Plant",
+        "voltageKv": 0,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.51139,
+          37.05187
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "강릉 안인개폐소",
+        "voltageKv": 0,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.92164,
+          37.64725
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "고령변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.40517,
+          35.73368
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "곤지암변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.33669,
+          37.37142
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "광양변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.62275,
+          34.9701
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "군산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.85711,
+          35.96816
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "금정개폐소",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.7792,
+          34.81229
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "남울산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.35619,
+          35.48817
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "대구변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.69006,
+          35.73322
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "동부산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.09338,
+          35.14775
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "동서울 변전소",
+        "voltageKv": 0,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.16693,
+          37.51001
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "동서울 변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.16763,
+          37.51112
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "동울산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.39284,
+          35.6512
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "동해변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.09957,
+          37.51034
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "목동변전소",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.86879,
+          37.52011
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "미금변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.18302,
+          37.59622
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1046514122",
+        "voltageKv": 0,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.22459,
+          36.90075
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1093106964",
+        "voltageKv": 0,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.79772,
+          37.00704
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1093106965",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.43983,
+          37.2366
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1093106969",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.44059,
+          37.25075
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1093461939",
+        "voltageKv": 0,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.11009,
+          34.91538
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1094336370",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.4735,
+          35.71418
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1094336380",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.47207,
+          35.71225
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1094339201",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.38899,
+          37.08943
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1094339210",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.37878,
+          37.09743
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1094349456",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.41438,
+          35.40403
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1094349469",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.41641,
+          35.40609
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1095094769",
+        "voltageKv": 0,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.88125,
+          36.53824
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1095918335",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.14801,
+          37.36523
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1098797537",
+        "voltageKv": 0,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.54214,
+          36.59642
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1330692418",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.28921,
+          35.32168
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #1430838230",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.43934,
+          37.2364
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #143990783",
+        "voltageKv": 0,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.42244,
+          35.41265
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #143990784",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.41281,
+          35.40738
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #143990785",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.41804,
+          35.41005
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #143993310",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.38137,
+          37.08997
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #308775743",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.47874,
+          35.71998
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #313355100",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.87763,
+          35.41311
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #4765741833",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.42611,
+          34.94504
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #606158230",
+        "voltageKv": 765,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.30899,
+          35.34061
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #606158231",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.29241,
+          35.32478
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "변전소 #884263043",
+        "voltageKv": 765,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.38909,
+          37.08124
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "북경남변전소",
+        "voltageKv": 765,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.55421,
+          35.61393
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "북당진변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.78392,
+          36.95495
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "북부산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.02471,
+          35.2361
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "산청양수변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.77631,
+          35.25624
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "새만금변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.62247,
+          35.95648
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "서대구 변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.40617,
+          35.97082
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "서부산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.99574,
+          35.14788
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "서서울변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.91656,
+          37.31021
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "서안성변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.22172,
+          37.09742
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "선산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.43032,
+          36.17768
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "성동변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.03966,
+          37.56809
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "성암변전소",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.35487,
+          35.4874
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "세종변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.33495,
+          36.49542
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "순천변전소",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.51344,
+          34.95032
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신가평변전소",
+        "voltageKv": 765,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.5031,
+          37.61654
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신강진변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.70146,
+          34.73045
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신경산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.83479,
+          35.87204
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신계룡변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.27593,
+          36.24647
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신고성변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.11129,
+          34.91291
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신광명변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.84856,
+          37.45848
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신광주변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9342,
+          35.20856
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신김제변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.00603,
+          35.75774
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신김포변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.62639,
+          37.63609
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신김해변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.77785,
+          35.21888
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신남원변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.46573,
+          35.4516
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신녹산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.8651,
+          35.09842
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신당진변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.58159,
+          36.85295
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신덕은변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.76757,
+          37.80535
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신마산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.52528,
+          35.28762
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신부평변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.73035,
+          37.51606
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신서산변전소",
+        "voltageKv": 765,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.63875,
+          36.77134
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신성남 변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.05277,
+          37.38267
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신수원변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.07756,
+          37.22161
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신시화변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.7492,
+          37.30308
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신시흥변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.76185,
+          37.36199
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신안산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.87866,
+          37.30066
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신안성변전소",
+        "voltageKv": 765,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.28128,
+          37.09783
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신양산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.1792,
+          35.24053
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신양양변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.55153,
+          38.01549
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신양재변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.02756,
+          37.48522
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신영일변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.23792,
+          36.08205
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신영주변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.56553,
+          36.77534
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신옥천변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.53269,
+          36.29434
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신온산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.32929,
+          35.43586
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신온양변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.00743,
+          36.87905
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신용인변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.14629,
+          37.24257
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신울산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.2985,
+          35.49447
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신의정부변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.09054,
+          37.75657
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신인천변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.69278,
+          37.4892
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신제천변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.23254,
+          37.17758
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신중부변전소",
+        "voltageKv": 765,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.35922,
+          36.74889
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신진천변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.38833,
+          36.8216
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신탕정변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.0604,
+          36.82465
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신태백변전소",
+        "voltageKv": 765,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.96152,
+          37.25617
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신파주변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.77118,
+          37.73987
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신포천변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.16185,
+          37.95093
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신포항 변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.40734,
+          35.93933
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "신화순변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9308,
+          34.96462
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "아산변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.9243,
+          36.79108
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "안성변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.24489,
+          37.02074
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "양곡변전소",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.62118,
+          37.65817
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "양주변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.92021,
+          37.68421
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "영등포변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.89445,
+          37.51969
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "영월변전소",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.49619,
+          37.16208
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "영천변전소",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.96319,
+          35.98743
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "울주변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.21238,
+          35.67774
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "은진변전소",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.11026,
+          36.1777
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "의령변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.12923,
+          35.34132
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "의성변전소",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.67013,
+          36.34186
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "이리변전소",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "호남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.93381,
+          35.94292
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "정보 변전소",
+        "voltageKv": 0,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.1312,
+          35.17349
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "창원변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          128.63647,
+          35.20382
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "청송양수변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.0161,
+          36.40595
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "청양변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.78829,
+          36.46669
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "청원변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.46079,
+          36.55358
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "평택변전소",
+        "voltageKv": 154,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.02109,
+          37.03034
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "포스코변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "영남"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          129.39255,
+          35.99761
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "한국발전기술",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "중부"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          127.69295,
+          34.83908
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "name": "화성변전소",
+        "voltageKv": 345,
+        "grid": "main",
+        "region": "수도권/강원"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.88816,
+          37.13923
+        ]
+      }
+    }
   ]
 }
