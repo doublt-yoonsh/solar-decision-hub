@@ -45,6 +45,8 @@ export interface PlantLocation {
     annualKwhPerKw: number;
     /** Daily peak sun hours (h/day). */
     peakSunHours: number;
+    /** PVGIS-derived Performance Ratio (E_y / H(i)_y) for this coordinate. */
+    derivedPR?: number;
     /** Where the value came from. */
     source: IrradianceSource;
   };

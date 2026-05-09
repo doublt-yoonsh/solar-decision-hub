@@ -59,10 +59,15 @@ export interface ReverseGeocodingResult {
 export interface PvgisResult {
   lat: number;
   lng: number;
-  /** Annual generation per kW installed. */
+  /** Annual generation per kW installed (PVGIS E_y). */
   annualKwhPerKw: number;
   /** Daily peak sun hours. */
   peakSunHours: number;
+  /** Annual incident irradiation per m² (PVGIS H(i)_y, kWh/m²/yr). */
+  annualIrradiationKwhPerM2?: number;
+  /** Performance Ratio derived from PVGIS as E_y / H(i)_y.
+   *  Coordinate-specific incl. environmental losses (AoI, temp, spectral). */
+  derivedPR?: number;
   /** Optional 12-month series — may be absent in mock mode. */
   monthlyProduction?: Array<{ month: number; kwhPerKw: number }>;
   sourceMeta: SourceMeta;

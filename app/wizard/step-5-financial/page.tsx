@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import {
@@ -31,9 +31,29 @@ export default function Step5Page() {
   const markComplete = useWizardStore((s) => s.markComplete);
 
   const capacityKw = plant.capacityKw ?? 99;
-  const [capex, setCapex] = useState<number>(
-    plant.capex ?? capacityKw * CAPEX_PER_KW,
+  const initialCapex = plant.capex ?? capacityKw * CAPEX_PER_KW;
+  const [capex, setCapex] = useState<number>(initialCapex);
+  const [capexStr, setCapexStr] = useState<string>(
+    initialCapex.toLocaleString("ko-KR"),
   );
+
+  // Auto-apply PVGIS-derived PR once on mount, if available.
+  const derivedPR = plant.location?.solarIrradiance?.derivedPR;
+  const [autoApplied, setAutoApplied] = useState(false);
+  useEffect(() => {
+    if (derivedPR !== undefined && !autoApplied) {
+      const clamped = Math.max(0.65, Math.min(0.9, derivedPR));
+      setPR(+clamped.toFixed(2));
+      setAutoApplied(true);
+    }
+  }, [derivedPR, autoApplied, setPR]);
+
+  const handleCapexChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/[^0-9]/g, "");
+    const num = raw === "" ? 0 : parseInt(raw, 10);
+    setCapex(num);
+    setCapexStr(num === 0 ? "" : num.toLocaleString("ko-KR"));
+  };
 
   const handleFinish = () => {
     updatePlant({ capex });
@@ -57,9 +77,11 @@ export default function Step5Page() {
             </label>
             <Input
               id="capex"
-              type="number"
-              value={capex}
-              onChange={(e) => setCapex(Number(e.target.value))}
+              type="text"
+              inputMode="numeric"
+              value={capexStr}
+              onChange={handleCapexChange}
+              placeholder="예: 128,700,000"
             />
             <p className="text-xs text-muted-foreground">
               자동 추정: {capacityKw}kW × 1,300,000원 ={" "}
@@ -80,7 +102,15 @@ export default function Step5Page() {
               onValueChange={(v) => setPR(v[0]!)}
             />
             <p className="text-xs text-muted-foreground">
-              한국 평균 0.85 · 보수 0.80 · 낙관 0.88
+              {derivedPR !== undefined ? (
+                <>
+                  PVGIS 좌표별 추정:{" "}
+                  <strong>{derivedPR.toFixed(2)}</strong> (자동 적용됨) ·
+                  한국 평균 0.85 · 보수 0.80 · 낙관 0.88
+                </>
+              ) : (
+                <>한국 평균 0.85 · 보수 0.80 · 낙관 0.88</>
+              )}
             </p>
           </div>
 

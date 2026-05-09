@@ -8,7 +8,9 @@ import { mockPvgis } from "./mocks";
 
 interface PvgisFixedTotals {
   E_y: number; // annual energy yield (kWh/kWp/year)
-  H_y?: number; // annual irradiation (kWh/m²/year)
+  H_y?: number; // annual irradiation, plain key (some PVGIS versions)
+  // PVGIS uses literal "H(i)_y" with parentheses as a JSON key.
+  "H(i)_y"?: number;
 }
 
 interface PvgisFixedMonth {
@@ -48,13 +50,22 @@ function buildResult(
   const fixed = data.outputs?.totals?.fixed;
   if (!fixed) return null;
   const annualKwhPerKw = fixed.E_y;
+  const annualIrradiation = fixed["H(i)_y"] ?? fixed.H_y;
   const peakSunHours = annualKwhPerKw / 365 / PR_BASELINE;
+  const derivedPR =
+    annualIrradiation && annualIrradiation > 0
+      ? +(annualKwhPerKw / annualIrradiation).toFixed(3)
+      : undefined;
   const monthly = data.outputs?.monthly?.fixed;
   return {
     lat,
     lng,
     annualKwhPerKw: Math.round(annualKwhPerKw),
     peakSunHours: +peakSunHours.toFixed(2),
+    ...(annualIrradiation !== undefined
+      ? { annualIrradiationKwhPerM2: Math.round(annualIrradiation) }
+      : {}),
+    ...(derivedPR !== undefined ? { derivedPR } : {}),
     ...(monthly
       ? {
           monthlyProduction: monthly.map((m) => ({

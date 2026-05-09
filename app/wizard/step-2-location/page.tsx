@@ -78,6 +78,9 @@ export default function Step2Page() {
                   solarIrradiance: {
                     annualKwhPerKw: res.irradiance.annualKwhPerKw,
                     peakSunHours: res.irradiance.peakSunHours,
+                    ...(res.irradiance.derivedPR !== undefined
+                      ? { derivedPR: res.irradiance.derivedPR }
+                      : {}),
                     source:
                       res.irradiance.sourceMeta.source === "real"
                         ? "pvgis"
