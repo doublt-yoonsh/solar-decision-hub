@@ -12,9 +12,16 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import {
   CoordinateInput,
   type Coordinates,
 } from "@/components/location/CoordinateInput";
+import { AddressSearch } from "@/components/location/AddressSearch";
 import { enrich } from "@/lib/location/enrich";
 import type { EnrichmentResult, DataSource } from "@/lib/location/types";
 import { useWizardStore } from "@/lib/store/wizard";
@@ -101,11 +108,26 @@ export default function Step2Page() {
         <CardHeader>
           <CardTitle>발전소 위치</CardTitle>
           <CardDescription>
-            좌표를 입력하면 자동으로 주소·일사량·부지·변전소를 매핑합니다 (mock 모드)
+            주소 검색이 가장 편합니다. 좌표를 정확히 알면 직접 입력도 가능.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <CoordinateInput onSubmit={run} />
+          <Tabs defaultValue="address">
+            <TabsList className="grid grid-cols-2 w-full">
+              <TabsTrigger value="address">주소 검색</TabsTrigger>
+              <TabsTrigger value="coords">좌표 직접 입력</TabsTrigger>
+            </TabsList>
+            <TabsContent value="address" className="pt-4">
+              <AddressSearch
+                onSelect={(lat, lng) => {
+                  void run({ lat, lng });
+                }}
+              />
+            </TabsContent>
+            <TabsContent value="coords" className="pt-4">
+              <CoordinateInput onSubmit={run} />
+            </TabsContent>
+          </Tabs>
           {loading && (
             <p className="mt-3 text-sm text-muted-foreground">처리 중...</p>
           )}

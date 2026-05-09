@@ -6,6 +6,7 @@ import {
   CoordinateInput,
   type Coordinates,
 } from "@/components/location/CoordinateInput";
+import { AddressSearch } from "@/components/location/AddressSearch";
 import { enrich } from "@/lib/location/enrich";
 import type {
   EnrichmentResult,
@@ -67,11 +68,27 @@ export default function TestLocationPage() {
         <CardHeader>
           <CardTitle>위치 인리치 테스트</CardTitle>
           <CardDescription>
-            좌표 → 주소 · 일사량 · 부지유형 · 변전소 매칭 결과 (mock 모드)
+            주소 검색 또는 좌표 입력 → 카카오·VWorld·PVGIS 매핑 결과
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <CoordinateInput onSubmit={run} />
+          <Tabs defaultValue="address">
+            <TabsList className="grid grid-cols-2 w-full">
+              <TabsTrigger value="address">주소 검색</TabsTrigger>
+              <TabsTrigger value="coords">좌표 입력</TabsTrigger>
+            </TabsList>
+            <TabsContent value="address" className="pt-4">
+              <AddressSearch
+                onSelect={(lat, lng) => {
+                  void run({ lat, lng });
+                }}
+              />
+            </TabsContent>
+            <TabsContent value="coords" className="pt-4">
+              <CoordinateInput onSubmit={run} />
+            </TabsContent>
+          </Tabs>
+
           <div className="flex flex-wrap gap-2 pt-2 border-t">
             <span className="text-xs text-muted-foreground self-center">
               프리셋:

@@ -1,47 +1,107 @@
 // /lib/location/pvgis.ts
-// PVGIS lookup — real call requires no API key but we still gate it behind
-// `ENABLE_PVGIS_REAL=true` so v1 demos don't depend on a live EU JRC endpoint.
+// PVGIS lookup. Real call goes through /api/location/pvgis (server-only),
+// which itself is gated by ENABLE_PVGIS_REAL=true. Falls back to the mock
+// estimator when the proxy returns 503.
 
 import type { PvgisResult } from "./types";
 import { mockPvgis } from "./mocks";
 
-/** When to call the real PVGIS endpoint vs mock. */
-function shouldUseReal(): boolean {
-  if (typeof process === "undefined") return false;
-  return process.env.ENABLE_PVGIS_REAL === "true";
+interface PvgisFixedTotals {
+  E_y: number; // annual energy yield (kWh/kWp/year)
+  H_y?: number; // annual irradiation (kWh/m²/year)
 }
 
-/**
- * Annual generation hours / annualKwhPerKw for a given coordinate.
- * Mock by default — Phase 2B implements the real `re.jrc.ec.europa.eu/api/v5_2` call.
- */
+interface PvgisFixedMonth {
+  month: number;
+  E_m: number; // monthly yield (kWh/kWp)
+  H_d?: number;
+}
+
+interface PvgisCalcResponse {
+  outputs?: {
+    totals?: { fixed?: PvgisFixedTotals };
+    monthly?: { fixed?: PvgisFixedMonth[] };
+  };
+}
+
+const PR_BASELINE = 0.85;
+
+async function fetchReal(
+  lat: number,
+  lng: number,
+): Promise<PvgisCalcResponse | null> {
+  try {
+    const r = await fetch(`/api/location/pvgis?lat=${lat}&lng=${lng}`);
+    if (!r.ok) return null;
+    return (await r.json()) as PvgisCalcResponse;
+  } catch (e) {
+    if (typeof console !== "undefined") console.warn("[pvgis] fetch error", e);
+    return null;
+  }
+}
+
+function buildResult(
+  lat: number,
+  lng: number,
+  data: PvgisCalcResponse,
+): PvgisResult | null {
+  const fixed = data.outputs?.totals?.fixed;
+  if (!fixed) return null;
+  const annualKwhPerKw = fixed.E_y;
+  const peakSunHours = annualKwhPerKw / 365 / PR_BASELINE;
+  const monthly = data.outputs?.monthly?.fixed;
+  return {
+    lat,
+    lng,
+    annualKwhPerKw: Math.round(annualKwhPerKw),
+    peakSunHours: +peakSunHours.toFixed(2),
+    ...(monthly
+      ? {
+          monthlyProduction: monthly.map((m) => ({
+            month: m.month,
+            kwhPerKw: +m.E_m.toFixed(1),
+          })),
+        }
+      : {}),
+    sourceMeta: {
+      source: "real",
+      confidence: "high",
+      notes: "PVGIS PVcalc API (loss=14, fixed-tilt)",
+    },
+  };
+}
+
 export async function getYearlyGenHours(
   lat: number,
   lng: number,
 ): Promise<PvgisResult> {
-  if (!shouldUseReal()) {
-    return mockPvgis(lat, lng);
+  const data = await fetchReal(lat, lng);
+  if (data) {
+    const built = buildResult(lat, lng, data);
+    if (built) return built;
   }
-  // Phase 2B real call — same shape, sourceMeta.source: 'real'.
   return mockPvgis(lat, lng);
 }
 
-/**
- * Same as `getYearlyGenHours` but with a 12-month synthetic seasonal curve.
- * The real PVGIS endpoint returns this directly; mock approximates with a
- * cosine peaking in June (Northern Hemisphere).
- */
 export async function getMonthlyProduction(
   lat: number,
   lng: number,
   capacityKw: number,
 ): Promise<PvgisResult> {
-  void capacityKw; // Reserved for Phase 2B (real call uses peakpower param).
-  const base = await getYearlyGenHours(lat, lng);
+  void capacityKw;
+  const data = await fetchReal(lat, lng);
+  if (data) {
+    const built = buildResult(lat, lng, data);
+    if (built) return built;
+  }
+  // mock + synthetic monthly
+  const yearly = mockPvgis(lat, lng);
   const monthlyProduction = Array.from({ length: 12 }, (_, i) => {
     const seasonal = 1 + 0.25 * Math.cos(((i - 5) * Math.PI) / 6);
-    const kwhPerKw = +((base.annualKwhPerKw / 12) * seasonal).toFixed(1);
-    return { month: i + 1, kwhPerKw };
+    return {
+      month: i + 1,
+      kwhPerKw: +((yearly.annualKwhPerKw / 12) * seasonal).toFixed(1),
+    };
   });
-  return { ...base, monthlyProduction };
+  return { ...yearly, monthlyProduction };
 }

@@ -1,24 +1,25 @@
 // /lib/location/enrich.ts
 // Combined location enrichment pipeline.
-// Each sub-step runs independently; a failure in one is captured in
-// `partialFailures` rather than aborting the whole pipeline.
+// Runs Kakao + VWorld + PVGIS in parallel. Each step is independent — a
+// failure in one is captured in `partialFailures` rather than aborting.
+//
+// Address priority:    Kakao primary  → VWorld fallback
+// SiteType priority:   VWorld level5  → text heuristic fallback
+// Irradiance:          PVGIS real     → mock estimator fallback
+// Substation:          12-seed Haversine (always local)
 
 import type { EnrichmentResult, EnrichmentFailure } from "./types";
-import { reverseGeocode } from "./kakao";
+import { reverseGeocode as kakaoReverse } from "./kakao";
+import { lookup as vworldLookup } from "./vworld";
 import { getYearlyGenHours } from "./pvgis";
-import { inferSiteType } from "./siteTypeHeuristic";
+import { inferSiteType as heuristicSiteType } from "./siteTypeHeuristic";
 import { findNearest } from "./substation";
 
-/**
- * Run all enrichment steps for a coordinate, tolerating partial failures.
- * Caller renders any populated field; absent fields surface in `partialFailures`.
- */
 export async function enrich(
   lat: number,
   lng: number,
 ): Promise<EnrichmentResult> {
   const failures: EnrichmentFailure[] = [];
-
   const result: EnrichmentResult = {
     lat,
     lng,
@@ -26,38 +27,53 @@ export async function enrich(
     computedAt: new Date().toISOString(),
   };
 
-  // 1) Reverse geocode (drives the address used by step 3).
-  let addressText: string | undefined;
-  try {
-    const address = await reverseGeocode(lat, lng);
-    result.address = address;
-    addressText = address.address;
-  } catch (e) {
-    failures.push({ step: "reverse-geocode", error: errorMessage(e) });
+  const [kakaoResult, vworldResult, pvgisResult] = await Promise.allSettled([
+    kakaoReverse(lat, lng),
+    vworldLookup(lat, lng),
+    getYearlyGenHours(lat, lng),
+  ]);
+
+  // -- Address: Kakao primary, VWorld fallback ---------------------------
+  if (kakaoResult.status === "fulfilled") {
+    result.address = kakaoResult.value;
+  } else {
+    failures.push({
+      step: "reverse-geocode",
+      error: errorMessage(kakaoResult.reason),
+    });
+  }
+  if (
+    !result.address &&
+    vworldResult.status === "fulfilled" &&
+    vworldResult.value
+  ) {
+    result.address = vworldResult.value.address;
   }
 
-  // 2) PVGIS irradiance.
-  try {
-    result.irradiance = await getYearlyGenHours(lat, lng);
-  } catch (e) {
-    failures.push({ step: "pvgis", error: errorMessage(e) });
+  // -- Irradiance --------------------------------------------------------
+  if (pvgisResult.status === "fulfilled") {
+    result.irradiance = pvgisResult.value;
+  } else {
+    failures.push({ step: "pvgis", error: errorMessage(pvgisResult.reason) });
   }
 
-  // 3) Site-type heuristic — needs address text. Skip if address failed.
-  if (addressText) {
+  // -- Site type: VWorld level5 first, address heuristic fallback --------
+  if (vworldResult.status === "fulfilled" && vworldResult.value) {
+    result.siteTypeHint = vworldResult.value.siteType;
+  } else if (result.address) {
     try {
-      result.siteTypeHint = inferSiteType(addressText);
+      result.siteTypeHint = heuristicSiteType(result.address.address);
     } catch (e) {
       failures.push({ step: "site-type", error: errorMessage(e) });
     }
   } else {
     failures.push({
       step: "site-type",
-      error: "skipped — reverse geocode unavailable",
+      error: "skipped — no address available",
     });
   }
 
-  // 4) Nearest substation — pure data lookup, rarely fails.
+  // -- Nearest substation (always local) ---------------------------------
   try {
     result.nearestSubstation = findNearest(lat, lng);
   } catch (e) {

@@ -5,6 +5,18 @@ v1 = 현재 진행 중인 Phase 0~6 단일 사이클로 도달하는 첫 release
 
 ---
 
+## v0.1.0 마일스톤 (완료)
+
+- ✅ Phase 0~4 (types · data · location · simulator · benchmark · portfolio · UI · PDF · 배포)
+- ✅ Vercel 한국 리전(icn1) 배포
+- ✅ 카카오 REST API 실호출 (서버 프록시 + 자동 mock fallback)
+- ✅ VWorld address API 실호출 (level5에서 토지 종류 자동 추출)
+- ✅ PVGIS PVcalc 실호출 (좌표별 실제 일사량)
+- ✅ 주소 텍스트 검색 모드 (위저드 step-2 + test-location)
+- ✅ PDF 한글 폰트 self-host
+
+---
+
 ## v2 일관성 작업 후보 — 출처 구분 필드 확장
 
 v1에서는 시나리오 B만 `smpBaseSource: 'official' | 'estimated'`로 분해 출처를 구분한다.
