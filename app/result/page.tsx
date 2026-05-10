@@ -18,6 +18,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
 import { useWizardStore } from "@/lib/store/wizard";
 import { simulate } from "@/lib/simulator";
 import { analyzePortfolio } from "@/lib/portfolio";
@@ -25,9 +26,6 @@ import { analyzeBenchmark } from "@/lib/benchmark";
 import type { PlantInput } from "@/lib/types/PlantInput";
 import type { ScenarioId } from "@/lib/types/ScenarioResult";
 
-// Lazy-load Recharts-heavy chart bundle and PDF generation. These two pieces
-// account for the majority of /result's First Load JS — splitting them keeps
-// the initial paint snappy on mobile.
 const ScenarioCharts = dynamic(
   () => import("@/components/result/ScenarioCharts"),
   {
@@ -54,6 +52,36 @@ const SCENARIO_FULL: Record<ScenarioId, string> = {
   C: "2027 신규입찰 (추정)",
   D: "직접 PPA",
 };
+
+const HELP_TEXT = {
+  npv: "순현재가치 (NPV) — 미래 매출을 할인율로 환산한 현재가치 합계. 양수면 사업성 있음.",
+  irr: "내부수익률 (IRR) — NPV가 0이 되는 할인율. 사업자 자본비용보다 높으면 투자 가치 있음.",
+  paybackPeriod:
+    "회수기간 — 누적 수익이 CAPEX와 같아지는 시점. 짧을수록 위험 낮음.",
+  riskRange:
+    "변동성 폭 — Monte Carlo 1000회 시뮬레이션의 10/50/90 percentile NPV.",
+  percentile:
+    "동급 대비 백분위 — 같은 시도·부지·용량 가상 1000개 발전소 중 상위 X%.",
+  policyRisk:
+    "정책 리스크 0~100 — A 비중×30 + C 비중×40 + Sunset 시기 신설 비중×30. 높을수록 RPS 폐지 영향 큼.",
+  curtailment:
+    "출력제어 노출 — 권역별 평균 출력제어율을 발전소 용량으로 가중평균. 추정값.",
+  hhi: "Herfindahl-Hirschman Index — 0~10000. 1500 이하 분산, 2500 이상 집중. 단일 지역 100% = 10000.",
+  pr: "발전 효율 (PR) — 시스템이 일사량을 전력으로 변환하는 효율. 한국 평균 0.85.",
+  discountRate:
+    "할인율 — 미래 매출을 현재가치로 환산하는 비율. 사업자 자본비용 가정.",
+} as const;
+
+function HelpIcon({ text }: { text: string }) {
+  return (
+    <span
+      title={text}
+      className="text-muted-foreground hover:text-foreground cursor-help text-[10px] inline-block ml-1"
+    >
+      ⓘ
+    </span>
+  );
+}
 
 function ChartSkeleton({ stack = 1 }: { stack?: number }) {
   return (
@@ -88,7 +116,7 @@ function PRBadge({ pr }: { pr: number }) {
   return (
     <span
       className={`text-[10px] rounded px-1.5 py-0.5 ${tone.cls}`}
-      title="발전 효율(PR) = 모듈·인버터·전선·토양 손실 종합. 결과의 발전량과 매출에 직접 영향. 슬라이더로 0.65~0.90 조정 가능."
+      title={HELP_TEXT.pr}
     >
       발전 효율: {tone.label} (PR {pr.toFixed(2)})
     </span>
@@ -110,6 +138,8 @@ export default function ResultPage() {
   const plants = useWizardStore((s) => s.plants);
   const performanceRatio = useWizardStore((s) => s.performanceRatio);
   const discountRate = useWizardStore((s) => s.discountRate);
+  const setPR = useWizardStore((s) => s.setPerformanceRatio);
+  const setDR = useWizardStore((s) => s.setDiscountRate);
   const [hydrated, setHydrated] = useState(false);
   const [pdfMounted, setPdfMounted] = useState(false);
 
@@ -184,6 +214,7 @@ export default function ResultPage() {
 
   return (
     <main className="min-h-screen p-4 sm:p-8 max-w-5xl mx-auto space-y-4">
+      {/* Header */}
       <Card>
         <CardHeader>
           <CardTitle className="text-lg sm:text-xl">
@@ -202,11 +233,69 @@ export default function ResultPage() {
         </CardHeader>
       </Card>
 
+      {/* C: Interactive assumption sliders */}
+      <Card>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm flex items-center gap-2">
+            ⚙️ 가정 조정
+            <span className="text-xs text-muted-foreground font-normal">
+              슬라이더를 움직이면 즉시 결과 갱신
+            </span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="grid sm:grid-cols-2 gap-5 pt-0">
+          <div className="space-y-2">
+            <div className="flex justify-between text-xs">
+              <span className="text-muted-foreground">
+                발전 효율 (PR)
+                <HelpIcon text={HELP_TEXT.pr} />
+              </span>
+              <span className="font-medium">
+                {performanceRatio.toFixed(2)}
+              </span>
+            </div>
+            <Slider
+              value={[performanceRatio]}
+              min={0.65}
+              max={0.9}
+              step={0.01}
+              onValueChange={(v) => setPR(v[0]!)}
+            />
+            <p className="text-[10px] text-muted-foreground">
+              한국 평균 0.85 · 보수 0.80 · 낙관 0.88
+            </p>
+          </div>
+          <div className="space-y-2">
+            <div className="flex justify-between text-xs">
+              <span className="text-muted-foreground">
+                할인율 (NPV 계산용)
+                <HelpIcon text={HELP_TEXT.discountRate} />
+              </span>
+              <span className="font-medium">
+                {(discountRate * 100).toFixed(1)}%
+              </span>
+            </div>
+            <Slider
+              value={[discountRate]}
+              min={0.03}
+              max={0.1}
+              step={0.005}
+              onValueChange={(v) => setDR(v[0]!)}
+            />
+            <p className="text-[10px] text-muted-foreground">
+              사업자 자본비용 가정 — 디폴트 5%
+            </p>
+          </div>
+        </CardContent>
+      </Card>
+
+      {/* Summary 3 cards */}
       <div className="grid sm:grid-cols-3 gap-3">
         <Card>
           <CardHeader className="pb-2">
             <CardTitle className="text-xs text-muted-foreground font-normal">
               진단 (동급 대비)
+              <HelpIcon text={HELP_TEXT.percentile} />
             </CardTitle>
             <CardDescription className="text-2xl font-bold text-foreground">
               상위 {(100 - benchmark.efficiencyPercentile).toFixed(0)}%
@@ -229,6 +318,7 @@ export default function ResultPage() {
           <CardContent className="text-xs text-muted-foreground">
             {SCENARIO_FULL[sim.bestScenario]} · NPV{" "}
             {krwShort(sim.scenarios[sim.bestScenario].npv)}원
+            <HelpIcon text={HELP_TEXT.npv} />
           </CardContent>
         </Card>
 
@@ -236,13 +326,14 @@ export default function ResultPage() {
           <CardHeader className="pb-2">
             <CardTitle className="text-xs text-muted-foreground font-normal">
               정책 리스크
+              <HelpIcon text={HELP_TEXT.policyRisk} />
             </CardTitle>
             <CardDescription className="text-2xl font-bold text-foreground">
               {portfolio.policyRisk.totalScore.toFixed(0)}/100
             </CardDescription>
           </CardHeader>
           <CardContent className="text-xs text-muted-foreground flex gap-2 flex-wrap items-center">
-            <span>
+            <span title={HELP_TEXT.curtailment}>
               출력제어 {(portfolio.weightedCurtailmentRate * 100).toFixed(1)}%
             </span>
             <EstimateBadge label="추정값" />
@@ -260,7 +351,10 @@ export default function ResultPage() {
         <TabsContent value="diagnosis" className="space-y-3 mt-4">
           <Card>
             <CardHeader>
-              <CardTitle>발전 효율 백분위</CardTitle>
+              <CardTitle className="flex items-center gap-1">
+                발전 효율 백분위
+                <HelpIcon text={HELP_TEXT.percentile} />
+              </CardTitle>
               <CardDescription>
                 동급 발전소 {benchmark.peerCount}개소 대비 (kWh/kWp/year 기준)
               </CardDescription>
@@ -318,13 +412,84 @@ export default function ResultPage() {
         </TabsContent>
 
         <TabsContent value="scenarios" className="space-y-3 mt-4">
+          {/* B: Why this recommendation? Explainer card */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                💡 왜 시나리오 {sim.explanation.winner}가 추천되었나?
+              </CardTitle>
+              <CardDescription>
+                {SCENARIO_FULL[sim.explanation.winner]}
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4 text-sm">
+              <div>
+                <p className="text-xs font-medium text-muted-foreground mb-1.5">
+                  추천 이유
+                </p>
+                <ul className="space-y-1">
+                  {sim.explanation.primaryReasons.map((r, i) => (
+                    <li key={i} className="flex gap-2">
+                      <span className="text-muted-foreground">·</span>
+                      <span>{r}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="pt-3 border-t">
+                <p className="text-xs font-medium text-muted-foreground mb-1.5">
+                  시나리오 순위
+                </p>
+                <ul className="space-y-1.5">
+                  {sim.explanation.comparison.map((c) => (
+                    <li
+                      key={c.id}
+                      className={`grid grid-cols-[auto_auto_1fr_auto] gap-2 items-baseline text-xs py-1 ${
+                        c.id === sim.explanation.winner
+                          ? "text-emerald-700 font-medium"
+                          : ""
+                      }`}
+                    >
+                      <span className="font-mono">{c.rankPosition}위</span>
+                      <span className="font-mono font-semibold">{c.id}</span>
+                      <span className="text-muted-foreground">
+                        {SCENARIO_FULL[c.id]}
+                      </span>
+                      <span>{c.reason}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {sim.explanation.caveats.length > 0 && (
+                <div className="pt-3 border-t bg-amber-50/60 -mx-6 -mb-6 px-6 py-3 rounded-b-lg">
+                  <p className="text-xs font-medium text-amber-900 mb-1">
+                    ⚠️ 주의사항
+                  </p>
+                  <ul className="space-y-1 text-xs text-amber-900">
+                    {sim.explanation.caveats.map((c, i) => (
+                      <li key={i} className="flex gap-2">
+                        <span>·</span>
+                        <span>{c}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
           <ScenarioCharts sim={sim} />
         </TabsContent>
 
         <TabsContent value="risk" className="space-y-3 mt-4">
           <Card>
             <CardHeader>
-              <CardTitle>정책 리스크 분해</CardTitle>
+              <CardTitle className="flex items-center gap-1">
+                정책 리스크 분해
+                <HelpIcon text={HELP_TEXT.policyRisk} />
+              </CardTitle>
               <CardDescription>
                 {portfolio.policyRisk.formulaDescription} ·{" "}
                 {portfolio.policyRisk.formulaVersion}
@@ -387,21 +552,32 @@ export default function ResultPage() {
           {fullPlants.length > 1 && (
             <Card>
               <CardHeader>
-                <CardTitle>포트폴리오 분산도</CardTitle>
-                <CardDescription>HHI 0~10000 (낮을수록 분산)</CardDescription>
+                <CardTitle className="flex items-center gap-1">
+                  포트폴리오 분산도
+                  <HelpIcon text={HELP_TEXT.hhi} />
+                </CardTitle>
+                <CardDescription>
+                  HHI 0~10000 (낮을수록 분산)
+                </CardDescription>
               </CardHeader>
               <CardContent className="space-y-1 text-sm">
                 <p>
                   지역 집중도:{" "}
-                  <strong>{portfolio.concentrationByRegion.toFixed(0)}</strong>
+                  <strong>
+                    {portfolio.concentrationByRegion.toFixed(0)}
+                  </strong>
                 </p>
                 <p>
                   부지 집중도:{" "}
-                  <strong>{portfolio.concentrationBySiteType.toFixed(0)}</strong>
+                  <strong>
+                    {portfolio.concentrationBySiteType.toFixed(0)}
+                  </strong>
                 </p>
                 <p>
                   계통 집중도:{" "}
-                  <strong>{portfolio.concentrationByGrid.toFixed(0)}</strong>
+                  <strong>
+                    {portfolio.concentrationByGrid.toFixed(0)}
+                  </strong>
                 </p>
               </CardContent>
             </Card>
