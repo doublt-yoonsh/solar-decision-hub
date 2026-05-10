@@ -74,11 +74,20 @@ const HELP_TEXT = {
 
 function HelpIcon({ text }: { text: string }) {
   return (
-    <span
-      title={text}
-      className="text-muted-foreground hover:text-foreground cursor-help text-[10px] inline-block ml-1"
-    >
-      ⓘ
+    <span className="relative inline-block group align-baseline ml-1">
+      <span
+        className="text-muted-foreground group-hover:text-foreground group-focus-within:text-foreground cursor-help text-[10px] select-none"
+        tabIndex={0}
+        aria-label="도움말"
+      >
+        ⓘ
+      </span>
+      <span
+        role="tooltip"
+        className="invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 transition-opacity duration-150 absolute z-50 top-full left-0 mt-1.5 w-72 max-w-[calc(100vw-2rem)] p-2.5 bg-foreground text-background text-xs leading-relaxed rounded-md shadow-lg pointer-events-none whitespace-normal"
+      >
+        {text}
+      </span>
     </span>
   );
 }
