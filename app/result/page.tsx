@@ -183,7 +183,7 @@ export default function ResultPage() {
   }
 
   return (
-    <main className="min-h-screen p-4 sm:p-8 max-w-5xl mx-auto space-y-4 pb-24">
+    <main className="min-h-screen p-4 sm:p-8 max-w-5xl mx-auto space-y-4">
       <Card>
         <CardHeader>
           <CardTitle className="text-lg sm:text-xl">
@@ -409,7 +409,7 @@ export default function ResultPage() {
         </TabsContent>
       </Tabs>
 
-      <div className="fixed bottom-0 inset-x-0 bg-background/95 backdrop-blur border-t p-3 flex flex-wrap gap-2 justify-end max-w-5xl mx-auto">
+      <div className="sticky bottom-0 -mx-4 sm:-mx-8 mt-4 bg-background/95 backdrop-blur border-t p-3 flex flex-wrap gap-2 justify-end">
         <Button variant="outline" asChild>
           <Link href="/docs">가정 보기</Link>
         </Button>
